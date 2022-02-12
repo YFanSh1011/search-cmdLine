@@ -1,0 +1,176 @@
+{
+  "GOOGLE": {
+    "text": {
+      "base-url": "https://www.google.com/search?",
+      "query-params" : {
+        "keyword": "q",
+        "site": "as_sitesearch",
+        "filetype": "as_filetype"
+      },
+      "direct": true
+    },
+    "image": {
+      "base-url": "https://www.google.com/search?tbm=isch&",
+      "query-params": {
+        "keyword": "q"
+      },
+      "direct": true
+    },
+    "video": {
+      "base-url": "https://www.google.com/search?tbm=vid",
+      "query-params": {
+        "keyword": "q"
+      },
+      "direct": true
+    }
+  },
+
+  "DUCKDUCKGO": {
+    "text": {
+      "base-url": "https://www.duckduckgo.com/?",
+      "query-params" : {
+        "keyword": "q",
+        "site": "site",
+        "filetype": "filetype"
+      },
+      "direct": false
+    },
+    "image": {
+      "base-url": "https://duckduckgo.com/?iax=images&ia=images&",
+      "query-params": {
+        "keyword": "q"
+      },
+      "direct": true
+    },
+    "video": {
+      "base-url": "https://duckduckgo.com/?iax=videos&ia=videos&",
+      "query-params": {
+        "keyword": "q"
+      },
+      "direct": true
+    }
+  },
+
+  "YAHOO": {
+    "text": {
+      "base-url": "https://search.yahoo.com/search?",
+      "query-params": {
+        "keyword": "p",
+        "site": "vs",
+        "filetype": "vf"
+      },
+      "direct": true
+    },
+    "image": {
+      "base-url": "https://images.search.yahoo.com/search/images?",
+      "query-params": {
+        "keyword": "p"
+      },
+      "direct": true
+    },
+    "video": {
+      "base-url": "https://video.search.yahoo.com/search/video?",
+      "query-params": {
+        "keyword": "p"
+      },
+      "direct": true
+    }
+  },
+
+  "BAIDU": {
+    "text": {
+      "base-url": "https://www.baidu.com/s?",
+      "query-params" : {
+        "keyword": "wd",
+        "site": "q6",
+        "filetype": "ft"
+      },
+      "direct": true
+    },
+    "image": {
+      "base-url": "https://image.baidu.com/search/index?tn=baiduimage&",
+      "query-params": {
+        "keyword": "word"
+      },
+      "direct": true
+    },
+    "video": {
+      "base-url": "https://www.baidu.com/sf/vsearch?pd=video&",
+      "query-params": {
+        "keyword": "wd"
+      },
+      "direct": true
+    }
+  },
+
+  "BING": {
+    "image": {
+      "base-url": "https://www.bing.com/images/search?",
+      "query-params": {
+        "keyword": "q"
+      },
+      "direct": true
+    },
+    "text": {
+      "base-url": "https://www.bing.com/search?",
+      "query-params" : {
+        "keyword": "q",
+        "site": "site",
+        "filetype": "filetype"
+      },
+      "direct": false
+    },
+    "video": {
+      "base-url": "https://www.bing.com/videos/search?",
+      "query-params": {
+        "keyword": "q"
+      },
+      "direct": true
+    }
+  },
+
+  "YOUTUBE": {
+    "only": "video",
+    "video": {
+      "base-url": "https://www.youtube.com/results?",
+      "query-params": {
+        "keyword": "search_query"
+      },
+      "direct": true
+    }
+  },
+
+  "BILIBILI": {
+    "only": "video",
+    "video": {
+      "base-url": "https://search.bilibili.com/all?",
+      "query-params": {
+        "keyword": "keyword"
+      },
+      "direct": true
+    }
+  },
+
+  "PINTEREST": {
+    "only": "image",
+    "image": {
+      "base-url": "https://www.pinterest.com.au/search/pins/?",
+      "query-params": {
+        "keyword": "q"
+      },
+      "direct": true,
+      "support_login": true
+    }
+  },
+
+  "FLICKR": {
+    "only": "image",
+    "image": {
+      "base-url": "https://www.flickr.com/search/?",
+      "query-params": {
+        "keyword": "text"
+      },
+      "direct": true
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "browsers": ["CHROME", "FIREFOX"],
+  "search_engines": [
+    {
+      "name": "GOOGLE",
+      "methods": ["text", "image", "video"]
+    },
+    {
+      "name": "BING",
+      "methods": ["text", "image", "video"]
+    },
+    {
+      "name": "BAIDU",
+      "methods": ["text", "image", "video"]
+    },
+    {
+      "name": "DUCKDUCKGO",
+      "methods": ["text", "image", "video"]
+    },
+    {
+      "name": "YAHOO",
+      "methods": ["text", "image", "video"]
+    },
+    {
+      "name": "YOUTUBE",
+      "methods": ["video"]
+    },
+    {
+      "name": "BILIBILI",
+      "methods": ["video"]
+    },
+    {
+      "name": "PINTEREST",
+      "methods": ["image"]
+    },
+    {
+      "name": "FLICKR",
+      "methods": ["image"]
+    }
+  ]
+}

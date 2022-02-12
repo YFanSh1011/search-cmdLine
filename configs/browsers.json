@@ -1,0 +1,9 @@
+{
+  "CHROME": {
+    "func-call": "new_chrome_driver()"
+  },
+
+  "FIREFOX": {
+    "func-call": "new_gecko_driver()"
+  }
+}
