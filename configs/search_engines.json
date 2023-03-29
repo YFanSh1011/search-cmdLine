@@ -1,6 +1,6 @@
 {
   "GOOGLE": {
-    "text": {
+    "web": {
       "base-url": "https://www.google.com/search?",
       "query-params" : {
         "keyword": "q",
@@ -26,7 +26,7 @@
   },
 
   "DUCKDUCKGO": {
-    "text": {
+    "web": {
       "base-url": "https://www.duckduckgo.com/?",
       "query-params" : {
         "keyword": "q",
@@ -52,7 +52,7 @@
   },
 
   "YAHOO": {
-    "text": {
+    "web": {
       "base-url": "https://search.yahoo.com/search?",
       "query-params": {
         "keyword": "p",
@@ -78,7 +78,7 @@
   },
 
   "BAIDU": {
-    "text": {
+    "web": {
       "base-url": "https://www.baidu.com/s?",
       "query-params" : {
         "keyword": "wd",
@@ -111,7 +111,7 @@
       },
       "direct": true
     },
-    "text": {
+    "web": {
       "base-url": "https://www.bing.com/search?",
       "query-params" : {
         "keyword": "q",
@@ -167,6 +167,54 @@
     "only": "image",
     "image": {
       "base-url": "https://www.flickr.com/search/?",
+      "query-params": {
+        "keyword": "text"
+      },
+      "direct": true
+    }
+  },
+
+  "STARTPAGE": {
+    "image": {
+      "base-url": "https://www.startpage.com/sp/search?cat=images&",
+      "query-params": {
+        "keyword": "query"
+      },
+      "direct": true
+    },
+    "web": {
+      "base-url": "https://www.startpage.com/sp/search?cat=web&",
+      "query-params" : {
+        "keyword": "query"
+      },
+      "direct": true
+    },
+    "video": {
+      "base-url": "https://www.startpage.com/sp/search?cat=video&",
+      "query-params": {
+        "keyword": "query"
+      },
+      "direct": true
+    }
+  },
+
+  "YANDEX": {
+    "web": {
+      "base-url": "https://yandex.com/search/?",
+      "query-params": {
+        "keyword": "text"
+      },
+      "direct": true
+    },
+    "image": {
+      "base-url": "https://yandex.com/images/search?",
+      "query-params": {
+        "keyword": "text"
+      },
+      "direct": true
+    },
+    "video": {
+      "base-url": "https://yandex.com/video/search?",
       "query-params": {
         "keyword": "text"
       },

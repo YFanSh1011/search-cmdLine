@@ -3,23 +3,23 @@
   "search_engines": [
     {
       "name": "GOOGLE",
-      "methods": ["text", "image", "video"]
+      "methods": ["web", "image", "video"]
     },
     {
       "name": "BING",
-      "methods": ["text", "image", "video"]
+      "methods": ["web", "image", "video"]
     },
     {
       "name": "BAIDU",
-      "methods": ["text", "image", "video"]
+      "methods": ["web", "image", "video"]
     },
     {
       "name": "DUCKDUCKGO",
-      "methods": ["text", "image", "video"]
+      "methods": ["web", "image", "video"]
     },
     {
       "name": "YAHOO",
-      "methods": ["text", "image", "video"]
+      "methods": ["web", "image", "video"]
     },
     {
       "name": "YOUTUBE",
@@ -36,6 +36,10 @@
     {
       "name": "FLICKR",
       "methods": ["image"]
+    },
+    {
+      "name": "YANDEX",
+      "methods": ["web", "image", "video"]
     }
   ]
 }

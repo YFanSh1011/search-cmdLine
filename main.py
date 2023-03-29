@@ -1,6 +1,7 @@
 import sys
 import json
-from search_entry import SearchEntry as Search
+from search_entry import SearchEntry
+from search_driver import SearchDriver
 from errors.InvalidUsageError import InvalidUsageError
 
 
@@ -18,10 +19,10 @@ def validate_default(config):
         raise InvalidUsageError("Empty default.json file.")
 
     if default_browser is not None:
-        if default_browser.upper() not in Search.browsers.keys():
+        if default_browser.upper() not in SearchDriver.browsers.keys():
             raise InvalidUsageError("Invalid browser option.")
     if default_se is not None:
-        if default_se.upper() not in Search.websites.keys():
+        if default_se.upper() not in SearchEntry.websites.keys():
             raise InvalidUsageError("Invalid search engine option.")
 
 
@@ -144,8 +145,33 @@ def main():
     if is_change_mode:
         change_default(options)
     else:
-        entry = Search(options)
-        entry.execute_search()
+        search_entry_pool = []
+        # Special case:
+        # When user select option "all"
+        if options.get('se').upper() == 'ALL':
+            search_engines_names = []
+            with open('./configs/allowed_options.json') as f:
+                search_engines_json = json.load(f)['search_engines']
+                for k in search_engines_json:
+                    # Filter out not supported search engines if the method is not supported
+                    if options['method']:
+                        if options['method'] in k['methods']:
+                            search_engines_names.append(k['name'])
+                    else:
+                        search_engines_names.append(k['name'])
+            for se in search_engines_names:
+                options['se'] = se
+                entry = SearchEntry(options)
+                entry.prepare_search()
+                search_entry_pool.append(entry)
+        else:
+            entry = SearchEntry(options)
+            entry.prepare_search()
+            search_entry_pool.append(entry)
+
+        search_driver = SearchDriver(search_entry_pool, options['browser'])
+        search_driver.configure_browser()
+        search_driver.execute_search()
 
 
 if __name__ == '__main__':
