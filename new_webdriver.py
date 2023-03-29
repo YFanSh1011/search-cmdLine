@@ -1,12 +1,15 @@
 import selenium.webdriver as webdriver
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.chrome.service import Service as ChromiumService
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.utils import ChromeType
 
-# Only return the Class instead of returning the instance
-# Else the webdriver will be executed without checking the conditions
+
 def new_chrome_driver():
-    opts = webdriver.ChromeOptions()
-    opts.add_experimental_option("detach", True)
-    kwargs = {"options": opts}
-    return webdriver.Chrome, kwargs
+    driver = webdriver.Chrome(service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
+    return driver
 
 def new_gecko_driver():
-    return webdriver.Firefox, None
+    driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+    return driver

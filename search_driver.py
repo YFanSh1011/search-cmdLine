@@ -16,21 +16,16 @@ class SearchDriver:
         self.search_entries = search_entries
         self.webdriver_str = webdriver_str
         self.webdriver = None
-        self.webdriver_opts = None
 
     def configure_browser(self):
         # Convert the options to UPPER case before comparing:
         browser_string = self.webdriver_str.upper()
-        browser_of_choice = SearchDriver.browsers.get(browser_string)
-        if browser_of_choice is None:
-            raise InvalidUsageError('Invalid browser option.')
-        self.webdriver, self.webdriver_opts = eval('browser.' + browser_of_choice['func-call'])
+        if (browser_string.lower() == "firefox"):
+            self.webdriver = browser.new_gecko_driver()
+        elif (browser_string.lower() == 'chrome'): 
+            self.webdriver = browser.new_chrome_driver()
 
     def execute_search(self):
-        if self.webdriver_opts is None:
-            self.webdriver = self.webdriver()
-        else:
-            self.webdriver = self.webdriver(**self.webdriver_opts)
         if len(self.search_entries) > 1:
             for i in range(len(self.search_entries)):
                 self.webdriver.switch_to.window(self.webdriver.window_handles[i])

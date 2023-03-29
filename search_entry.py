@@ -1,5 +1,4 @@
 import json
-import automations.pinterest
 from errors.InvalidUsageError import InvalidUsageError
 
 def load_predefined(filepath, empty_dict):
@@ -33,7 +32,7 @@ class SearchEntry:
             if self.se.get('only') is not None:
                 self.method = self.se['only']
             else:
-                self.method = 'text'
+                self.method = 'web'
         else:
             user_method = self.options.get('method')
             if self.se.get(user_method) is None:

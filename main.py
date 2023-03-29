@@ -152,13 +152,13 @@ def main():
             search_engines_names = []
             with open('./configs/allowed_options.json') as f:
                 search_engines_json = json.load(f)['search_engines']
+                if 'method' not in options.keys():
+                    options['method'] = 'web'
                 for k in search_engines_json:
                     # Filter out not supported search engines if the method is not supported
-                    if options['method']:
-                        if options['method'] in k['methods']:
-                            search_engines_names.append(k['name'])
-                    else:
+                    if options['method'] in k['methods']:
                         search_engines_names.append(k['name'])
+                    
             for se in search_engines_names:
                 options['se'] = se
                 entry = SearchEntry(options)
