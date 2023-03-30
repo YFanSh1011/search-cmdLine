@@ -1,5 +1,7 @@
 import sys
 import json
+import signal
+import os
 from search_entry import SearchEntry
 from search_driver import SearchDriver
 from errors.InvalidUsageError import InvalidUsageError
@@ -169,10 +171,22 @@ def main():
             entry.prepare_search()
             search_entry_pool.append(entry)
 
-        search_driver = SearchDriver(search_entry_pool, options['browser'])
-        search_driver.configure_browser()
-        search_driver.execute_search()
-
+        # Setup signal listeners:
+        main_pid = os.getpid()
+        os.fork()
+        if (os.getpid() == main_pid):
+            # Wait until the SIGINT is send to main process to end the process
+            search_driver = SearchDriver(search_entry_pool, options['browser'])
+            search_driver.configure_browser()
+            signal.signal(signal.SIGINT, lambda x, y: print("Session ended"))
+            search_driver.execute_search()
+            signal.pause()
+            search_driver.webdriver.quit()
+        else:
+            user_input = input()
+            if (user_input.lower() == 'quit'):
+                os.kill(main_pid, signal.SIGINT)
+            
 
 if __name__ == '__main__':
     try:
