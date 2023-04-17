@@ -19,6 +19,7 @@ It will also add an alias to the configured "search.sh" script so that "search" 
 
 # Usage
 
+
 ## Flags
 
 ## Default
