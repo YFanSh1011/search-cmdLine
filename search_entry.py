@@ -1,14 +1,14 @@
 import json
 from errors.InvalidUsageError import InvalidUsageError
 
-def load_predefined(filepath, empty_dict):
+def load_predefined(filepath):
     with open(filepath, 'r') as f:
-        empty_dict = json.load(f)
-        return empty_dict
+        options = json.load(f)
+        return dict(options)
 
 class SearchEntry:
     websites = {}
-    websites = load_predefined('configs/search_engines.json', websites)
+    websites = load_predefined('configs/search_engines.json')
 
     def __init__(self, options):
         self.options = options
@@ -87,19 +87,3 @@ class SearchEntry:
         self.configure_search_site()
         self.configure_search_filetype()
         self.configure_full_url()
-
-    # def execute_search(self):
-    #     self.prepare_search()
-    #
-    #     if self.browser_opts is None:
-    #         self.browser = self.browser()
-    #     else:
-    #         self.browser = self.browser(**self.browser_opts)
-    #     self.browser.get(self.url)
-    #
-    #     if self.support_login:
-    #         user_option = input("Current search engine support login. Please enter y/Y if you want to login with the credentials stored in 'credentials' folder. Otherwise, enter anything else. ")
-    #         login_mod = "automations." + self.se_name
-    #         login_func = eval(login_mod + ".login")
-    #         if user_option == "Y" or user_option == "y":
-    #             login_func(self.browser)

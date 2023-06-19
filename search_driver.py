@@ -3,14 +3,13 @@ import new_webdriver as browser
 from errors.InvalidUsageError import InvalidUsageError
 
 
-def load_predefined(filepath, empty_dict):
+def load_predefined(filepath):
     with open(filepath, 'r') as f:
-        empty_dict = json.load(f)
-    return empty_dict
+        dest = json.load(f)
+    return dest
 
 class SearchDriver:
-    browsers = {}
-    browsers = load_predefined('configs/browsers.json', browsers)
+    browsers = load_predefined("./configs/browsers.json")
 
     def __init__(self, search_entries, webdriver_str):
         self.search_entries = search_entries
