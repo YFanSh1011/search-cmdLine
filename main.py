@@ -2,15 +2,39 @@ import sys
 import json
 import signal
 import os
+import argparse
 from search_entry import SearchEntry
 from search_driver import SearchDriver
 from errors.InvalidUsageError import InvalidUsageError
+
+
+def parse_command():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("keyword", help="The keyword you want to search for")
+    parser.add_argument("-s", "--search-engine", help="Your preferred search engine for search")
+    parser.add_argument("-b", "--browser", help="Your preferred browser to search")
+    parser.add_argument("-t", "--type", help="The media type that your would like to search for: web, image, video")
+    parser.add_argument("-a", "--all", help="Flag to indicate that you want to search on all compatible search engines",
+                        action="store_true")
+    parser.add_argument("--change-default", help="Flag to indicate that you want to edit the default config file", \
+                        action="store_true")
+    parser.add_argument('--display-default', help="Flag to indicate that you want to review the default config", \
+                        action="store_true")
+    return parser.parse_args()
 
 
 def display_default():
     with open('configs/default.json', 'r') as f:
         for line in f.readlines():
             print(line)
+
+
+def load_default():
+    with open('configs/default.json', 'r') as f:
+        default_config = json.load(f)
+        validate_default(default_config)
+        return default_config
 
 
 def validate_default(config):
@@ -26,13 +50,6 @@ def validate_default(config):
     if default_se is not None:
         if default_se.upper() not in SearchEntry.websites.keys():
             raise InvalidUsageError("Invalid search engine option.")
-
-
-def load_default():
-    with open('configs/default.json', 'r') as f:
-        default_config = json.load(f)
-        validate_default(default_config)
-        return default_config
 
 
 def change_default(options):
@@ -61,6 +78,7 @@ def show_functions():
 
 
 def command_switch(cmd):
+    args = parse_command()
     is_change_mode = False
 
     if '--set-default' in cmd:
