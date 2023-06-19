@@ -4,10 +4,9 @@ from errors.InvalidUsageError import InvalidUsageError
 def load_predefined(filepath):
     with open(filepath, 'r') as f:
         options = json.load(f)
-        return dict(options)
+        return options
 
 class SearchEntry:
-    websites = {}
     websites = load_predefined('configs/search_engines.json')
 
     def __init__(self, options):

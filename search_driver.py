@@ -5,11 +5,11 @@ from errors.InvalidUsageError import InvalidUsageError
 
 def load_predefined(filepath):
     with open(filepath, 'r') as f:
-        dest = json.load(f)
+        dest = [entry for entry in json.load(f)['browsers']]
     return dest
 
 class SearchDriver:
-    browsers = load_predefined("./configs/browsers.json")
+    browsers = load_predefined("./configs/allowed_options.json")
 
     def __init__(self, search_entries, webdriver_str):
         self.search_entries = search_entries

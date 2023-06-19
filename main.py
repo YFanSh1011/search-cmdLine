@@ -46,10 +46,10 @@ def validate_default(config):
         raise InvalidUsageError("Empty default.json file.")
 
     if default_browser is not None:
-        if default_browser.upper() not in SearchDriver.browsers.keys():
+        if default_browser.upper() not in SearchDriver.browsers:
             raise InvalidUsageError("Invalid browser option.")
     if default_se is not None:
-        if default_se.upper() not in SearchEntry.websites.keys():
+        if default_se.upper() not in SearchEntry.websites:
             raise InvalidUsageError("Invalid search engine option.")
 
 
@@ -144,7 +144,6 @@ This flag is used to display all available options of browsers, search engines, 
 
 def main():
     options = command_switch()
-    print(options)
 
     if not options.get("done"):
         search_entry_pool = []
