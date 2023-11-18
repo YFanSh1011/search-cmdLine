@@ -1,5 +1,5 @@
 import json
-import new_webdriver as browser
+import src.drivers.new_webdriver as browser
 from errors.InvalidUsageError import InvalidUsageError
 
 

@@ -2,8 +2,8 @@ import json
 import signal
 import os
 import argparse
-from search_entry import SearchEntry
-from search_driver import SearchDriver
+from src.model.search_entry import SearchEntry
+from src.model.search_driver import SearchDriver
 from errors.InvalidUsageError import InvalidUsageError
 
 
