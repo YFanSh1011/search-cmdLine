@@ -1,30 +1,31 @@
 import json
-import src.drivers.new_webdriver as browser
+from src.drivers.driver_factory import WebDriverFactory
 from errors.InvalidUsageError import InvalidUsageError
+from src.utils import paths
 
-
-def load_predefined(filepath):
-    with open(filepath, 'r') as f:
-        dest = [entry for entry in json.load(f)['browsers']]
-    return dest
 
 class SearchDriver:
-    browsers = load_predefined("./configs/allowed_options.json")
 
-    def __init__(self, search_entries, webdriver_str):
+    _browsers = []
+
+    def __init__(self, search_entries, browser_name):
         self.search_entries = search_entries
-        self.webdriver_str = webdriver_str
+        self.browser_name = browser_name
         self.webdriver = None
+
+    @staticmethod
+    def get_predefined_browsers():
+        with open(paths.ALLOWED_OPTIONS, 'r') as f:
+            dest = [entry for entry in json.load(f)['browsers']]
+        SearchDriver._browsers = dest
+        return SearchDriver._browsers
 
     def configure_browser(self):
         # Convert the options to UPPER case before comparing:
-        browser_string = self.webdriver_str.upper()
-        if (browser_string.lower() == "firefox"):
-            self.webdriver = browser.new_gecko_driver()
-        elif (browser_string.lower() == 'chrome'): 
-            self.webdriver = browser.new_chrome_driver()
+        self.webdriver = WebDriverFactory.get_driver(self.browser_name.lower())
 
     def execute_search(self):
+        # The situation where user selected to search in "ALL"
         if len(self.search_entries) > 1:
             for i in range(len(self.search_entries)):
                 self.webdriver.switch_to.window(self.webdriver.window_handles[i])
@@ -32,4 +33,5 @@ class SearchDriver:
                 if i < len(self.search_entries) - 1:
                     self.webdriver.execute_script("window.open()")
         else:
+            # The situation where user only search in one search engine
             self.webdriver.get(self.search_entries[0].url)

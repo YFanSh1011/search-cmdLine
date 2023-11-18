@@ -1,13 +1,12 @@
 import json
 from errors.InvalidUsageError import InvalidUsageError
+from src.utils import paths
 
-def load_predefined(filepath):
-    with open(filepath, 'r') as f:
-        options = json.load(f)
-        return options
 
 class SearchEntry:
-    websites = load_predefined('configs/search_engines.json')
+    
+    _websites = None
+    _search_engines = None
 
     def __init__(self, options):
         self.options = options
@@ -18,9 +17,17 @@ class SearchEntry:
         self.method = None
         self.support_login = False
 
+    @staticmethod
+    def get_predefined_search_engines():
+        with open(paths.SEARCH_ENGINES, 'r') as f:
+            options = json.load(f)
+            SearchEntry._search_engines = options
+            SearchEntry._websites = [key for key in options]
+        return SearchEntry._websites
+
     def configure_search_engine(self):
         user_option = self.options['se'].upper()
-        se_in_use = SearchEntry.websites.get(user_option)
+        se_in_use = SearchEntry._search_engines.get(user_option)
         if se_in_use is None:
             raise InvalidUsageError('Unsupported search engine.')
         self.se = se_in_use

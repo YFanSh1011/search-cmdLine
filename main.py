@@ -4,6 +4,7 @@ import os
 import argparse
 from src.model.search_entry import SearchEntry
 from src.model.search_driver import SearchDriver
+from src.utils import paths, default
 from errors.InvalidUsageError import InvalidUsageError
 
 
@@ -25,47 +26,9 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def display_default():
-    with open('configs/default.json', 'r') as f:
-        for line in f.readlines():
-            print(line)
-
-
-def load_default():
-    with open('configs/default.json', 'r') as f:
-        default_config = json.load(f)
-        validate_default(default_config)
-        return default_config
-
-
-def validate_default(config):
-    default_browser = config.get('browser')
-    default_se = config.get('se')
-
-    if default_se is None and default_se is None:
-        raise InvalidUsageError("Empty default.json file.")
-
-    if default_browser is not None:
-        if default_browser.upper() not in SearchDriver.browsers:
-            raise InvalidUsageError("Invalid browser option.")
-    if default_se is not None:
-        if default_se.upper() not in SearchEntry.websites:
-            raise InvalidUsageError("Invalid search engine option.")
-
-
-def change_default(options):
-    validate_default(options)
-    config_json = json.dumps(options, indent=4)
-    with open('configs/default.json', 'w') as f:
-        f.write(config_json)
-
-    print("Success. Current default: ")
-    display_default()
-
-
 def show_functions():
     options = {}
-    with open('configs/allowed_options.json', 'r') as f:
+    with open(paths.ALLOWED_OPTIONS, 'r') as f:
         options = json.load(f)
 
     print()
@@ -88,19 +51,19 @@ def command_switch():
             new_config['browser'] = args.browser
         if args.search_engine is not None:
             new_config['se'] = args.search_engine
-        change_default(new_config)
+        default.change_default(new_config)
         parsed_cmd['done'] = True
     elif args.display_default:
-        display_default()
+        default.display_default()
         parsed_cmd['done'] = True
     elif args.show_functions:
         show_functions()
         parsed_cmd['done'] = True
     else:
         if not args.keyword:
-            raise Exception("search keyword not specified")
+            raise InvalidUsageError("search keyword not specified")
         else:
-            default_options = load_default()
+            default_options = default.load_default()
             parsed_cmd['kw'] = args.keyword
             parsed_cmd['browser'] = args.browser if args.browser is not None else default_options['browser']
             parsed_cmd['se'] = args.search_engine if args.search_engine is not None else default_options['se']
@@ -111,29 +74,24 @@ def command_switch():
 
 def show_help_menu(error_message):
     menu = \
-        '''
-Please refer to the flags and available options:
+'''
+usage: main.py [-h] [-w KEYWORD] [-s SEARCH_ENGINE] [-b BROWSER] [-t TYPE] [-a] [--change-default]
+               [--display-default] [--show-functions]
 
--w [browser]        :   chrome, firefox
--o [search engine]  :   google, duckduckgo, baidu, bing, youtube, bilibili, 
--kw                 :   Arbitrary search keywords. Please enclose it with double quotes if the keyword is consisted of multiple words
--f                  :   Arbitrary file type 
-                        !!!Some file types may not be applicable for certain search engine.
--s                  :   Specific domain that you would like to search in.
--m                  :   Method of search, used to specify the type of results you want [ text(default), video, image ]
-                        !!! Some search methods may not be applicable for certain search engines
--h                  :   Display help menu. YUP, you are looking at it right now.
-
-
---set-default [flags]:
-This flag should be the first flag following 'search'. It is used to write new config to the 'default.json' file.
-
---show-default:
-This flag enables the program to display your current 'default.json' file.
-
---show-functions:
-This flag is used to display all available options of browsers, search engines, and the search methods they support 
-    '''
+options:
+  -h, --help            show this help message and exit
+  -w KEYWORD, --keyword KEYWORD
+                        The keyword you want to search for
+  -s SEARCH_ENGINE, --search-engine SEARCH_ENGINE
+                        Your preferred search engine for search
+  -b BROWSER, --browser BROWSER
+                        Your preferred browser to search
+  -t TYPE, --type TYPE  The media type that your would like to search for: web, image, video
+  -a, --all             Flag to indicate that you want to search on all compatible search engines
+  --change-default      Flag to indicate that you want to edit the default config file
+  --display-default     Flag to indicate that you want to review the default config
+  --show-functions      Flag to display all compatible seatch engines & their options
+'''
     if error_message == 'None':
         pass
     else:
@@ -151,7 +109,7 @@ def main():
         # When user select option "all"
         if options.get('all'):
             search_engines_names = []
-            with open('./configs/allowed_options.json') as f:
+            with open(paths.ALLOWED_OPTIONS) as f:
                 search_engines_json = json.load(f)['search_engines']
                 if 'method' not in options.keys():
                     options['method'] = 'web'
@@ -173,6 +131,7 @@ def main():
         # Setup signal listeners:
         main_pid = os.getpid()
         os.fork()
+        
         if os.getpid() == main_pid:
             # Wait until the SIGINT is send to main process to end the process
             search_driver = SearchDriver(search_entry_pool, options['browser'])
