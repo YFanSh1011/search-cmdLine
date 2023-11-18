@@ -140,7 +140,7 @@ def _main():
             entry.prepare_search()
             search_entry_pool.append(entry)
 
-        # Setup signal listeners:
+        # Setup signal listeners (Definitely requires refactoring):
         main_pid = os.getpid()
         os.fork()
         
