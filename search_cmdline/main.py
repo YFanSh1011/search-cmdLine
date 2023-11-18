@@ -8,6 +8,7 @@ from search_cmdline.src.utils import paths, default
 from search_cmdline.errors.InvalidUsageError import InvalidUsageError
 
 
+
 def parse_arguments():
     parser = argparse.ArgumentParser()
 
@@ -66,8 +67,9 @@ def command_switch():
             default_options = default.load_default()
             parsed_cmd['kw'] = args.keyword
             parsed_cmd['browser'] = args.browser if args.browser is not None else default_options['browser']
-            parsed_cmd['se'] = args.search_engine if args.search_engine is not None else default_options['se']
-            parsed_cmd['method'] = args.type if args.type is not None else "web"
+            search_method = args.type if args.type is not None else "web"
+            parsed_cmd['method'] = search_method
+            parsed_cmd['se'] = args.search_engine if args.search_engine is not None else default_options['se'].get(search_method)
             parsed_cmd['all'] = args.all
     return parsed_cmd
 
@@ -151,9 +153,9 @@ def _main():
             signal.pause()
             search_driver.webdriver.quit()
         else:
+            # If use enters anything, quit the webdriver
             user_input = input()
-            if user_input.lower() == 'quit':
-                os.kill(main_pid, signal.SIGINT)
+            os.kill(main_pid, signal.SIGINT)
             
 def main():
     try:
@@ -161,4 +163,6 @@ def main():
     except InvalidUsageError as e:
         show_help_menu(str(e))
 
-    
+
+if __name__ == '__main__':
+    main()

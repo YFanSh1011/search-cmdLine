@@ -1,4 +1,8 @@
 {
     "browser": "firefox",
-    "se": "duckduckgo"
+    "se": {
+        "web": "GOOGLE",
+        "video": "YOUTUBE",
+        "image": "PINTEREST"
+    }
 }
