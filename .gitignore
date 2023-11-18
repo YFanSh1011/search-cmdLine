@@ -126,3 +126,5 @@ dmypy.json
 
 # log files
 *.log
+
+*.egg-info
