@@ -1,6 +1,6 @@
 import json
-from search_cmdline.errors.InvalidUsageError import InvalidUsageError
-from search_cmdline.src.utils import paths
+from errors.InvalidUsageError import InvalidUsageError
+from src.utils import paths
 
 
 class SearchEntry:

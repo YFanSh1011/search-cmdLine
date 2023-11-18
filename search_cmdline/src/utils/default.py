@@ -1,8 +1,8 @@
 import json
-from search_cmdline.errors.InvalidUsageError import InvalidUsageError
-from search_cmdline.src.model.search_driver import SearchDriver
-from search_cmdline.src.model.search_entry import SearchEntry
-from search_cmdline.src.utils import paths
+from errors.InvalidUsageError import InvalidUsageError
+from src.model.search_driver import SearchDriver
+from src.model.search_entry import SearchEntry
+from src.utils import paths
 
 
 def display_default():
@@ -20,17 +20,19 @@ def load_default():
 
 def validate_default(config):
     default_browser = config.get('browser')
-    default_se = config.get('se')
+    default_se_options = config.get('se')
 
-    if default_se is None and default_se is None:
+    if default_se_options is None and default_browser is None:
         raise InvalidUsageError("Empty default.json file.")
 
     if default_browser is not None:
         if default_browser.upper() not in SearchDriver.get_predefined_browsers():
             raise InvalidUsageError("Invalid browser option.")
-    if default_se is not None:
-        if default_se.upper() not in SearchEntry.get_predefined_search_engines():
-            raise InvalidUsageError("Invalid search engine option.")
+    if default_se_options is not None:
+        valid_search_engines = SearchEntry.get_predefined_search_engines()
+        for value in  default_se_options.values():
+            if value.upper() not in valid_search_engines:
+                raise InvalidUsageError("Invalid search engine option.")
 
 
 def change_default(options):
