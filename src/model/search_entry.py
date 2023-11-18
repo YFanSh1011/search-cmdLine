@@ -5,7 +5,8 @@ from src.utils import paths
 
 class SearchEntry:
     
-    _websites = []
+    _websites = None
+    _search_engines = None
 
     def __init__(self, options):
         self.options = options
@@ -18,14 +19,15 @@ class SearchEntry:
 
     @staticmethod
     def get_predefined_search_engines():
-        with open(paths.ALLOWED_OPTIONS, 'r') as f:
+        with open(paths.SEARCH_ENGINES, 'r') as f:
             options = json.load(f)
-            SearchEntry._websites = options
+            SearchEntry._search_engines = options
+            SearchEntry._websites = [key for key in options]
         return SearchEntry._websites
 
     def configure_search_engine(self):
         user_option = self.options['se'].upper()
-        se_in_use = SearchEntry.websites.get(user_option)
+        se_in_use = SearchEntry._search_engines.get(user_option)
         if se_in_use is None:
             raise InvalidUsageError('Unsupported search engine.')
         self.se = se_in_use

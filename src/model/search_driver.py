@@ -1,5 +1,5 @@
 import json
-import src.drivers.webdrivers as browser
+from src.drivers.driver_factory import WebDriverFactory
 from errors.InvalidUsageError import InvalidUsageError
 from src.utils import paths
 
@@ -22,11 +22,7 @@ class SearchDriver:
 
     def configure_browser(self):
         # Convert the options to UPPER case before comparing:
-        browser_string = self.browser_name.upper()
-        if (browser_string.lower() == "firefox"):
-            self.webdriver = browser.new_gecko_driver()
-        elif (browser_string.lower() == 'chrome'): 
-            self.webdriver = browser.new_chrome_driver()
+        self.webdriver = WebDriverFactory.get_driver(self.browser_name.lower())
 
     def execute_search(self):
         # The situation where user selected to search in "ALL"
