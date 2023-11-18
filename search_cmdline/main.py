@@ -100,7 +100,31 @@ options:
         print(menu)
 
 
-def main():
+def prepare_all_entry_pool(options):
+    search_entry_pool = []
+    search_engines_names = []
+    
+    # Load all available search engines in json config file
+    with open(paths.ALLOWED_OPTIONS) as f:
+        search_engines_json = json.load(f)['search_engines']
+        
+        # If user haven't specified the search method, use web search by default
+        if 'method' not in options.keys():
+            options['method'] = 'web'
+        for k in search_engines_json:
+            # Filter out not supported search engines if the method is not supported
+            if options['method'] in k['methods']:
+                search_engines_names.append(k['name'])
+
+    # For each SearchEntry object, configure their URLs       
+    for se in search_engines_names:
+        options['se'] = se
+        entry = SearchEntry(options)
+        entry.prepare_search()
+        search_entry_pool.append(entry)
+
+
+def _main():
     options = command_switch()
 
     if not options.get("done"):
@@ -108,21 +132,7 @@ def main():
         # Special case:
         # When user select option "all"
         if options.get('all'):
-            search_engines_names = []
-            with open(paths.ALLOWED_OPTIONS) as f:
-                search_engines_json = json.load(f)['search_engines']
-                if 'method' not in options.keys():
-                    options['method'] = 'web'
-                for k in search_engines_json:
-                    # Filter out not supported search engines if the method is not supported
-                    if options['method'] in k['methods']:
-                        search_engines_names.append(k['name'])
-                    
-            for se in search_engines_names:
-                options['se'] = se
-                entry = SearchEntry(options)
-                entry.prepare_search()
-                search_entry_pool.append(entry)
+            search_entry_pool = prepare_all_entry_pool(options)
         else:
             entry = SearchEntry(options)
             entry.prepare_search()
@@ -145,9 +155,10 @@ def main():
             if user_input.lower() == 'quit':
                 os.kill(main_pid, signal.SIGINT)
             
-
-if __name__ == '__main__':
+def main():
     try:
-        main()
+        _main()
     except InvalidUsageError as e:
         show_help_menu(str(e))
+
+    
