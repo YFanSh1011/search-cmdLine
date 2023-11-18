@@ -1,7 +1,7 @@
 import json
-from errors.InvalidUsageError import InvalidUsageError
-from src.drivers.driver_factory import WebDriverFactory
-from src.utils import paths
+from search_cmdline.errors.InvalidUsageError import InvalidUsageError
+from search_cmdline.src.drivers.driver_factory import WebDriverFactory
+from search_cmdline.src.utils import paths
 
 
 class SearchDriver:

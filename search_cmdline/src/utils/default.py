@@ -1,8 +1,8 @@
 import json
-from errors.InvalidUsageError import InvalidUsageError
-from src.model.search_driver import SearchDriver
-from src.model.search_entry import SearchEntry
-from src.utils import paths
+from search_cmdline.errors.InvalidUsageError import InvalidUsageError
+from search_cmdline.src.model.search_driver import SearchDriver
+from search_cmdline.src.model.search_entry import SearchEntry
+from search_cmdline.src.utils import paths
 
 
 def display_default():
