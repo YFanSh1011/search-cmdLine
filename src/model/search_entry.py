@@ -1,13 +1,11 @@
 import json
 from errors.InvalidUsageError import InvalidUsageError
+from src.utils import paths
 
-def load_predefined(filepath):
-    with open(filepath, 'r') as f:
-        options = json.load(f)
-        return options
 
 class SearchEntry:
-    websites = load_predefined('configs/search_engines.json')
+    
+    _websites = []
 
     def __init__(self, options):
         self.options = options
@@ -17,6 +15,13 @@ class SearchEntry:
         self.se_name = None
         self.method = None
         self.support_login = False
+
+    @staticmethod
+    def get_predefined_search_engines():
+        with open(paths.ALLOWED_OPTIONS, 'r') as f:
+            options = json.load(f)
+            SearchEntry._websites = options
+        return SearchEntry._websites
 
     def configure_search_engine(self):
         user_option = self.options['se'].upper()
