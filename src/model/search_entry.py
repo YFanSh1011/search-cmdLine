@@ -1,6 +1,6 @@
 import json
-from search_cmdline.errors.InvalidUsageError import InvalidUsageError
-from search_cmdline.src.utils import paths
+from errors.InvalidUsageError import InvalidUsageError
+from src.utils import paths
 
 
 class SearchEntry:
@@ -9,21 +9,12 @@ class SearchEntry:
     _search_engines = None
 
     def __init__(self, options):
-        self.options = options
-        self.url = ''
-        self.params = {}
-        self.se = None
-        self.se_name = None
-        self.method = None
-        self.support_login = False
-
-    @staticmethod
-    def get_predefined_search_engines():
-        with open(paths.SEARCH_ENGINES, 'r') as f:
-            options = json.load(f)
-            SearchEntry._search_engines = options
-            SearchEntry._websites = [key for key in options]
-        return SearchEntry._websites
+        self.options: dict = options
+        self.url: str = ''
+        self.params: dict = {}
+        self.se: dict = None
+        self.se_name: str = None
+        self.method: str = None
 
     def configure_search_engine(self):
         user_option = self.options['se'].upper()
@@ -47,29 +38,12 @@ class SearchEntry:
                 self.method = user_method
         self.se = self.se[self.method]
         self.url = self.se['base-url']
-        self.support_login = False if self.se.get('support_login') is None else True
 
     def configure_search_keywords(self):
         if self.options.get('kw') is None:
             raise InvalidUsageError('Search keyword is required.')
         encoded_kws = self.options['kw'].strip().lower().replace(' ', '+')
         self.params['keyword'] = encoded_kws
-
-    def configure_search_site(self):
-        supported_params = self.se['query-params']
-        if 'site' in self.options.keys():
-            if supported_params.get('site') is None:
-                raise InvalidUsageError('Unsupported functionality: search site.')
-            site_url = self.options['site'].strip().lower()
-            self.params['site'] = site_url
-
-    def configure_search_filetype(self):
-        supported_params = self.se['query-params']
-        if 'file' in self.options.keys():
-            if supported_params.get('filetype') is None:
-                raise InvalidUsageError('Unsupported functionality: file type.')
-            filetype = self.options['file'].strip().lower()
-            self.params['filetype'] = filetype
 
     def configure_full_url(self):
         url_addition = ''
@@ -90,6 +64,39 @@ class SearchEntry:
         self.configure_search_engine()
         self.configure_search_method()
         self.configure_search_keywords()
-        self.configure_search_site()
-        self.configure_search_filetype()
         self.configure_full_url()
+    
+    def get_full_url(self):
+        return self.url
+    
+    @staticmethod
+    def get_predefined_search_engines():
+        options = paths.SEARCH_ENGINES_JSON
+        SearchEntry._search_engines = options
+        SearchEntry._websites = [key for key in options]
+        return SearchEntry._websites
+    
+    @staticmethod
+    def prepare_all_entry_pool(options: dict) -> 'list[SearchEntry]':
+        search_entry_pool = []
+        search_engines_names = []
+        
+        # Load all available search engines in json config file
+        with open(paths.ALLOWED_OPTIONS) as f:
+            search_engines_json = json.load(f)['search_engines']
+            
+            # If user haven't specified the search method, use web search by default
+            if 'method' not in options.keys():
+                options['method'] = 'web'
+            for k in search_engines_json:
+                # Filter out not supported search engines if the method is not supported
+                if options['method'] in k['methods']:
+                    search_engines_names.append(k['name'])
+
+        # For each SearchEntry object, configure their URLs       
+        for se in search_engines_names:
+            options['se'] = se
+            entry = SearchEntry(options)
+            entry.prepare_search()
+            search_entry_pool.append(entry)
+        return search_entry_pool
