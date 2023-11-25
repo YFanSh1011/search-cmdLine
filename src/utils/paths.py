@@ -2,7 +2,6 @@ import os
 import json
 
 def get_file_path(filename):
-    # If being launched without packaging, use direct path
     script_path = os.path.abspath(__file__)
     return script_path.replace("src/utils/paths.py", "configs/") + filename
 
