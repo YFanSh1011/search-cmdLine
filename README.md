@@ -202,9 +202,10 @@ Note that `google` is the default search engine used for `video`, the `-s, --sea
 
 This project would not have been possible without the contributions and support from:
 
-- **Libraries and Tools**: A special thanks to the developers of webdriver-manager, for making the launching of webdrivers so much more convenient.
-
+- **Libraries and Tools**: A special thanks to the developers of [webdriver-manager](https://github.com/SergeyPirogov/webdriver_manager), for making the launching of webdrivers so much more convenient.
+  
 Your contributions, big and small, have been invaluable to the development of this project.
+
 
 
 # License
