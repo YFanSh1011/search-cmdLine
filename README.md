@@ -196,7 +196,7 @@ Note that since 1) the default search type is `web`, 2) `google` is the default 
 ```
 search -w java -t video -b chrome
 ```
-Note that `google` is the default search engine used for `video`, the `-s, --search-engine` flag is dropped.
+Note that `youtube` is the default search engine used for `video`, the `-s, --search-engine` flag is dropped.
 
 ## Credits and Acknowledgments
 
