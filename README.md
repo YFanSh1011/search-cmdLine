@@ -52,7 +52,8 @@ This command will launch the search engine in the browser as you have specified,
 ## Flags
 The entire functionalities are listed as follows:
 ```
-usage: main.py [-h] [-s SEARCH_ENGINE] [-b BROWSER] [-t TYPE] [-a] [--change-default] [--display-default] [--show-functions] keyword
+usage: main.py [-h] [-s SEARCH_ENGINE] [-b BROWSER] [-t TYPE] [-a]
+[--change-default] [--display-default] [--show-functions] keyword
 
 positional arguments:
   keyword               The keyword you want to search for
