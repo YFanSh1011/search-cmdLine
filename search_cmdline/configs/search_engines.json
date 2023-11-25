@@ -3,9 +3,7 @@
     "web": {
       "base-url": "https://www.google.com/search?",
       "query-params" : {
-        "keyword": "q",
-        "site": "as_sitesearch",
-        "filetype": "as_filetype"
+        "keyword": "q"
       },
       "direct": true
     },
@@ -29,9 +27,7 @@
     "web": {
       "base-url": "https://www.duckduckgo.com/?",
       "query-params" : {
-        "keyword": "q",
-        "site": "site",
-        "filetype": "filetype"
+        "keyword": "q"
       },
       "direct": false
     },
@@ -55,9 +51,7 @@
     "web": {
       "base-url": "https://search.yahoo.com/search?",
       "query-params": {
-        "keyword": "p",
-        "site": "vs",
-        "filetype": "vf"
+        "keyword": "p"
       },
       "direct": true
     },
@@ -81,9 +75,7 @@
     "web": {
       "base-url": "https://www.baidu.com/s?",
       "query-params" : {
-        "keyword": "wd",
-        "site": "q6",
-        "filetype": "ft"
+        "keyword": "wd"
       },
       "direct": true
     },
@@ -114,9 +106,7 @@
     "web": {
       "base-url": "https://www.bing.com/search?",
       "query-params" : {
-        "keyword": "q",
-        "site": "site",
-        "filetype": "filetype"
+        "keyword": "q"
       },
       "direct": false
     },

@@ -124,6 +124,7 @@ def prepare_all_entry_pool(options):
         entry = SearchEntry(options)
         entry.prepare_search()
         search_entry_pool.append(entry)
+    return search_entry_pool
 
 
 def _main():
