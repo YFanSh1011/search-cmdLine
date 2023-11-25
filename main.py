@@ -77,13 +77,13 @@ def command_switch():
 def show_help_menu(error_message):
     menu = \
 '''
-usage: main.py [-h] [-w KEYWORD] [-s SEARCH_ENGINE] [-b BROWSER] [-t TYPE] [-a] [--change-default]
-               [--display-default] [--show-functions]
+usage: main.py [-h] [-s SEARCH_ENGINE] [-b BROWSER] [-t TYPE] [-a] [--change-default] [--display-default] [--show-functions] keyword
+
+positional arguments:
+  keyword               The keyword you want to search for
 
 options:
   -h, --help            show this help message and exit
-  -w KEYWORD, --keyword KEYWORD
-                        The keyword you want to search for
   -s SEARCH_ENGINE, --search-engine SEARCH_ENGINE
                         Your preferred search engine for search
   -b BROWSER, --browser BROWSER
