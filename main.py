@@ -12,7 +12,7 @@ from search_cmdline.errors.InvalidUsageError import InvalidUsageError
 def parse_arguments():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-w", "--keyword", help="The keyword you want to search for", default="")
+    parser.add_argument("keyword", help="The keyword you want to search for", default="")
     parser.add_argument("-s", "--search-engine", help="Your preferred search engine for search")
     parser.add_argument("-b", "--browser", help="Your preferred browser to search")
     parser.add_argument("-t", "--type", help="The media type that your would like to search for: web, image, video")
