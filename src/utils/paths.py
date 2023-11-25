@@ -3,8 +3,8 @@ import json
 
 def get_file_path(filename):
     # If being launched without packaging, use direct path
-    _working_dir = os.getcwd()
-    return os.path.join(_working_dir, "configs", filename)
+    script_path = os.path.abspath(__file__)
+    return script_path.replace("src/utils/paths.py", "configs/") + filename
 
 def load_file_json(filename):
     with open(get_file_path(filename)) as f:
