@@ -1,14 +1,14 @@
 {
     "default": {
         "darwin": ["open"],
-        "linux": []
+        "linux": ["xdg-open"]
     },
     "chrome": {
         "darwin": ["open", "-a", "Google Chrome"],
-        "linux": []
+        "linux": ["google-chrome"]
     },
     "firefox": {
         "darwin": ["open", "-a", "Firefox"],
-        "linux": []
+        "linux": ["firefox"]
     }
 }
