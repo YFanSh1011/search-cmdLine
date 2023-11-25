@@ -1,21 +1,17 @@
 import json
-from search_cmdline.errors.InvalidUsageError import InvalidUsageError
-from search_cmdline.src.model.search_driver import SearchDriver
-from search_cmdline.src.model.search_entry import SearchEntry
-from search_cmdline.src.utils import paths
+from errors.InvalidUsageError import InvalidUsageError
+from src.model.search_command import SearchCommand
+from src.model.search_entry import SearchEntry
+from src.utils import paths
 
 
 def display_default():
-    with open(paths.DEFAULT_SETTING, 'r') as f:
-        for line in f.readlines():
-            print(line)
+    print(paths.DEFAULT_SETTING_JSON)
 
 
 def load_default():
-    with open(paths.DEFAULT_SETTING, 'r') as f:
-        default_config = json.load(f)
-        validate_default(default_config)
-        return default_config
+    validate_default(paths.DEFAULT_SETTING_JSON)
+    return paths.DEFAULT_SETTING_JSON
 
 
 def validate_default(config):
@@ -26,7 +22,7 @@ def validate_default(config):
         raise InvalidUsageError("Empty default.json file.")
 
     if default_browser is not None:
-        if default_browser.upper() not in SearchDriver.get_predefined_browsers():
+        if default_browser.upper() not in SearchCommand.get_predefined_browsers():
             raise InvalidUsageError("Invalid browser option.")
     if default_se_options is not None:
         valid_search_engines = SearchEntry.get_predefined_search_engines()

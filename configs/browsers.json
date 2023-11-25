@@ -1,0 +1,14 @@
+{
+    "default": {
+        "darwin": ["open"],
+        "linux": []
+    },
+    "chrome": {
+        "darwin": ["open", "-a", "Google Chrome"],
+        "linux": []
+    },
+    "firefox": {
+        "darwin": ["open", "-a", "Firefox"],
+        "linux": []
+    }
+}
